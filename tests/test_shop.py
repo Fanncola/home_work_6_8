@@ -16,6 +16,11 @@ def product():
     return Product("book", 100, "This is a book", 1000)
 
 
+@pytest.fixture()
+def phone():
+    return Product("Samsung", 1, "Samsung A333", 13456)
+
+
 class TestProducts:
     """
     Тестовый класс - это способ группировки ваших тестов по какой-то тематике
@@ -53,3 +58,15 @@ class TestCart:
         cart.remove_product(product, 13)
 
         assert cart.products == {}
+
+    def test_clear_basket(self, product, cart, phone):
+        cart.add_product(product, 12)
+        cart.add_product(phone, 1)
+        cart.clear()
+
+        assert cart.products == {}
+
+    def test_total_price(self, product, cart, phone):
+        cart.add_product(product, 12)
+        cart.add_product(phone, 1)
+        cart.get_total_price()
