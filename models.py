@@ -62,12 +62,14 @@ class Cart:
         else:
             self.products[product] -= remove_count
 
-
     def clear(self):
-        raise NotImplementedError
+        self.products.clear()
 
     def get_total_price(self) -> float:
-        raise NotImplementedError
+        if not self.products.keys():
+            return 0
+        else:
+            print(self.products)
 
     def buy(self):
         """
