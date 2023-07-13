@@ -50,13 +50,33 @@ class TestCart:
 
     def test_add_product(self, beer, cart):
         cart.add_product(beer, 12)
-
         assert cart.products[beer] == 12
+
+        cart.add_product(beer, 2)
+        assert cart.products[beer] == 14
+
+    def test_add_product_without_count(self, beer, cart):
+        cart.add_product(beer)
+        assert cart.products[beer] == 1
 
     def test_remove_product(self, beer, cart):
         cart.add_product(beer, 12)
-        cart.remove_product(beer, 13)
+        cart.remove_product(beer, 12)
+        assert cart.products == {beer: 0}
 
+    def test_remove_product_with_less_count(self, beer, cart):
+        cart.add_product(beer, 12)
+        cart.remove_product(beer, 11)
+        assert cart.products == {beer: 1}
+
+    def test_remove_product_with_more_count(self, beer, cart):
+        cart.add_product(beer, 12)
+        cart.remove_product(beer, 13)
+        assert cart.products == {}
+
+    def test_remove_product_without_count(self, beer, cart):
+        cart.add_product(beer, 12)
+        cart.remove_product(beer)
         assert cart.products == {}
 
     def test_clear_basket(self, beer, cart, phone):
