@@ -66,10 +66,10 @@ class Cart:
         self.products.clear()
 
     def get_total_price(self) -> float:
-        if not self.products.keys():
-            return 0
-        else:
-            print(self.products)
+        total = []
+        for item in self.products:
+            total.append(item.price * self.products[item])
+        return sum(total)
 
     def buy(self):
         """
@@ -77,4 +77,7 @@ class Cart:
         Учтите, что товаров может не хватать на складе.
         В этом случае нужно выбросить исключение ValueError
         """
-        raise NotImplementedError
+        for product in self.products.keys():
+            product.buy(self.products.get(product))
+
+        self.clear()
